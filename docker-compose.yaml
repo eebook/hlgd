@@ -7,7 +7,7 @@ services:
       dockerfile: ./Dockerfile
     # entrypoint: [python, manage.py]
     # command: [runserver, '--host', '0.0.0.0', '--port', '80']
-    # entrypoint: [sh]
+    entrypoint: [sh]
     volumes:
       - .:/src
       - ./container-logs:/var/log/eebook
@@ -22,6 +22,16 @@ services:
       - no_proxy=true
     networks:
       - hlgd
+  db:
+    image: $POSTGRES_IMAGE
+    ports:
+      - "5432"
+    env_file:
+      - envs/local.env
+    networks:
+      - hlgd
+    volumes:
+      - ./pg-data:/var/lib/postgresql/data
   redis:
     image: "redis:alpine"
     ports:

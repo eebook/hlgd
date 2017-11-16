@@ -57,7 +57,7 @@ def create_app(config_name='dev'):
     app.url_map.converters['regex'] = RegexConverter
     app.register_blueprint(root_bp, url_prefix='/v1')
 
-    from .courier import courier_bp
-    app.register_blueprint(courier_bp, url_prefix='/v1/email')
+    from .url_metadata import url_metadata_bp
+    app.register_blueprint(url_metadata_bp, url_prefix='/v1/url_metadata')
 
     return app

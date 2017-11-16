@@ -11,17 +11,16 @@ from flask import request
 from ..common.utils import json
 from ..common.exceptions import FieldValidateFailed
 from ..common import status
-from . import courier_bp
-from .clients import NotificationClient
+from . import url_metadata_bp
 
 LOGGER = logging.getLogger(__name__)
 
 
-@courier_bp.route('', methods=["POST"])
+@url_metadata_bp.route('', methods=["POST"])
 @json
-def send_message():
+def get_url_metadata():
     data = request.json
-    NotificationClient().send_email(data)
-    return {}, status.HTTP_204_NO_CONTENT
+    LOGGER.info('data???{}'.format(data))
+    return {}
 
 

@@ -3,6 +3,6 @@
 
 from flask import Blueprint
 
-courier_bp = Blueprint('courier', __name__)
+url_metadata_bp = Blueprint('url_metadata', __name__)
 
 from . import views  # noqa
