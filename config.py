@@ -27,8 +27,8 @@ class Config(object):
                                   'database': DB_NAME
                               })
     SQLALCHEMY_TRACK_MODIFICATIONS = True
-
     PAGINATE_BY = os.getenv('PAGINATE_BY', 10)
+    CATALOG_URL = 'https://github.com/eebook/catalog'
 
     HLGD_HEADERS = {
         'Accept': 'application/json',

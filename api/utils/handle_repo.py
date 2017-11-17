@@ -4,7 +4,8 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
+import logging
 
-from git.repo import Repo
+LOGGER = logging.getLogger(__name__)
 
-Repo.clone_from('https://github.com/eebook/catalog')
+
