@@ -13,7 +13,7 @@ from config import config
 from .common.exceptions import APIException
 from .common.middleware import response
 from .common.utils import RegexConverter
-
+from .common.database import db
 
 BP_NAME = 'root'
 root_bp = Blueprint(BP_NAME, __name__)
@@ -52,6 +52,7 @@ def create_app(config_name='dev'):
     config[config_name].init_app(app)
     logcfg = LogConfig(app)
     logcfg.init_app(app)
+    db.init_app(app)
 
     # Support regular expression
     app.url_map.converters['regex'] = RegexConverter

@@ -8,3 +8,4 @@ def get_template_content(file_path):
         content = f.read()
         f.close()
         return content
+

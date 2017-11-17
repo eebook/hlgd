@@ -6,7 +6,7 @@ RUN apk --update add --no-cache openssl ca-certificates postgresql-dev nginx sup
 
 # build pkgs
 # Use uwsgi: http://note.qidong.name/2017/06/28/uwsgi-in-docker/
-RUN apk add gcc g++ python3-dev musl-dev make
+RUN apk add gcc g++ python3-dev musl-dev make git
 
 # dev pkgs
 RUN apk add curl
