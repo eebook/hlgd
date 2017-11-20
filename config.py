@@ -9,7 +9,7 @@ class Config(object):
     LOG_HANDLER = os.getenv('LOG_HANDLER', 'debug,info,error').split(',')
     LOG_LEVEL = os.getenv('LOG_LEVEL', 'DEBUG')
     LOG_PATH = os.getenv('LOG_PATH', '/var/log/eebook/')
-    LOGCONFIG = get_log_config(component='hlvs', handlers=LOG_HANDLER, level=LOG_LEVEL, path=LOG_PATH)
+    LOGCONFIG = get_log_config(component='hlgd', handlers=LOG_HANDLER, level=LOG_LEVEL, path=LOG_PATH)
     LOGCONFIG_QUEUE = ['eebook']
 
     DB_USER = os.getenv("DB_USER", 'postgres')
