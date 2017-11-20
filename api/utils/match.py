@@ -3,9 +3,13 @@
 
 __author__ = "knarfeh@outlook.com"
 import re
+import logging
+from ..url_metadata.models import Metadata
+
+LOGGER = logging.getLogger(__name__)
 
 
-# TODO: get this from each repo
+# For debug
 SITE_REGEX_DICT = {
     'rss': [
         'atom'
@@ -16,10 +20,16 @@ SITE_REGEX_DICT = {
     ]
 }
 
+def _get_regex():
+    metadata_list = Metadata.query.all()
+    site_regex_dict = {item.name: item.regex for item in metadata_list}
+    return site_regex_dict
 
 
 def get_website_type(url):
-    for k, v in SITE_REGEX_DICT.items():
+    # TODO: add cache
+    site_regex_dict = _get_regex()
+    for k, v in site_regex_dict.items():
         if isinstance(v, str):
             search_result = re.search(v, url)
             if search_result is not None:
