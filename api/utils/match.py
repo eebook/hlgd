@@ -9,18 +9,7 @@ from ..url_metadata.models import Metadata
 LOGGER = logging.getLogger(__name__)
 
 
-# For debug
-SITE_REGEX_DICT = {
-    'rss': [
-        'atom'
-    ],
-    'talkpython': '(?<=talkpython\.fm/episodes/)(?P<subject_id>[^/\n\r]*)(/)',
-    'zhihu': [
-        '(?<=zhihu\.com/)people/(?P<author_id>[^/\n\r]*)'
-    ]
-}
-
-def _get_regex():
+def _get_regex_dict():
     metadata_list = Metadata.query.all()
     site_regex_dict = {item.name: item.regex for item in metadata_list}
     return site_regex_dict
@@ -28,7 +17,7 @@ def _get_regex():
 
 def get_website_type(url):
     # TODO: add cache
-    site_regex_dict = _get_regex()
+    site_regex_dict = _get_regex_dict()
     for k, v in site_regex_dict.items():
         if isinstance(v, str):
             search_result = re.search(v, url)
@@ -40,11 +29,3 @@ def get_website_type(url):
                 if search_result is not None:
                   return k
     return 'unknown'
-
-
-if __name__ == "__main__":
-    website_type1 = get_website_type('https://talkpython.fm/episodes/asdf/')
-    print('website type: {}'.format(website_type1))
-
-    website_type2 = get_website_type('https://zhihu.com/people/knarfeh')
-    print('website type: {}'.format(website_type2))
