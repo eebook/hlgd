@@ -32,7 +32,9 @@ def get_url_metadata():
         'name': metadata.name,
         'schema': metadata.schema,
         'repo': metadata.repo,
-        'info': metadata.info
+        'info': metadata.info,
+        'image': metadata.image,
+        'image_version': metadata.image_version
     }
     return result
 
@@ -40,7 +42,6 @@ def get_url_metadata():
 @url_metadata_bp.route('/sync', methods=["PUT"])
 @json
 def sync_metadata():
-    metadata_objs = Metadata.query.filter().all()
     catalog_path = Path('/catalog')
     if not catalog_path.exists():
         clone_repo('/catalog', current_app.config['CATALOG_URL'])

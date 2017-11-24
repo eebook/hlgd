@@ -15,6 +15,8 @@ class Metadata(BaseModel, ModelSerializerMixin):
     info = Column(String(255))
     schema = Column(JSON)
     regex = Column(String(255))
+    image = Column(String(255))
+    image_version = Column(String(255))
 
     def __repr__(self):
         return '<Metadata:%s>' % self.name
