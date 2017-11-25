@@ -18,6 +18,7 @@ from ..utils.handle_git import clone_repo, update_repo
 from ..utils.handle_repo import get_metadata_from_repo
 from .models import Metadata
 from .infra import insert_or_update
+from .exceptions import MetadataException
 
 LOGGER = logging.getLogger(__name__)
 
@@ -27,16 +28,19 @@ LOGGER = logging.getLogger(__name__)
 def get_url_metadata():
     data = request.json
     url_type = get_website_type(data['url'])
-    metadata = Metadata.query.filter_by(name=url_type).first_or_404()
-    result = {
-        'name': metadata.name,
-        'schema': metadata.schema,
-        'repo': metadata.repo,
-        'info': metadata.info,
-        'image': metadata.image,
-        'image_version': metadata.image_version
-    }
-    return result
+    metadata = Metadata.query.filter_by(name=url_type).first()
+    if metadata is not None:
+        result = {
+            'name': metadata.name,
+            'schema': metadata.schema,
+            'repo': metadata.repo,
+            'info': metadata.info,
+            'image': metadata.image,
+            'image_version': metadata.image_version
+        }
+        return result
+    else:
+        raise MetadataException('url_not_support')
 
 
 @url_metadata_bp.route('/sync', methods=["PUT"])

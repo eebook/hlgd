@@ -10,7 +10,7 @@ from werkzeug.exceptions import (Unauthorized, NotFound,
 
 from ..exceptions import JSONException, APIException
 
-SOURCE = 18086
+SOURCE = 18089
 
 
 @singledispatch
@@ -69,35 +69,16 @@ def json_error_handler(app):
         :status_code: response status code
         :type: error type
         """
-        response = jsonify(error.to_dict())
+        response = jsonify({
+            "errors": [
+                {
+                    "code": error.code,
+                    "message": error.message,
+                    "source": SOURCE
+                }
+            ]
+        })
         response.status_code = error.status_code
-        return response
-
-    @app.errorhandler(Unauthorized.code)
-    def unauthorized_error(error):
-        response = jsonify(
-            {
-                "errors": [
-                    {
-                        "code": "method_not_allowed",
-                        "messages": error.description,
-                        "source": SOURCE
-                    }
-                ]
-            }
-        )
-        response.status_code = error.code
-        return response
-
-    @app.errorhandler(NotFound.code)
-    def resource_not_found(error):
-        """
-        Custom `errorhandler` for 404 pages.
-        Returns a JSON object with a message
-        that accessed URL was not found.
-        """
-        response = jsonify(APIException(code='resource_not_exist').to_dict())
-        response.status_code = NotFound.code
         return response
 
     @app.errorhandler(MethodNotAllowed.code)
