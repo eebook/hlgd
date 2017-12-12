@@ -11,7 +11,10 @@ from ..common.serializer import ModelSerializerMixin
 class Metadata(BaseModel, ModelSerializerMixin):
     __tablename__ = "metadata"
     name = Column(String(36), primary_key=True)
+    author = Column(String(128))
+    author_link = Column(String(255))
     repo = Column(String(128))
+    repo_type = Column(String(36), default="github")
     info = Column(String(255))
     schema = Column(JSON)
     regex = Column(String(255))
