@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hlgdprod
+  namespace: default
+  labels:
+    run: hlgdprod
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: hlgdprod
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    run: hlgdprod
+  name: hlgdprod
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      run: hlgdprod
+  template:
+    metadata:
+      labels:
+        run: hlgdprod
+    spec:
+      containers:
+      - name: hlgdprod
+        image: daocloud.io/knarfeh/hlgdprod:latest
+        imagePullPolicy: Always
+        env:
+          - name: DB_USER
+            value: knarfeh
+          - name: DB_NAME
+            value: hlgd
+          - name: DB_PORT
+            value: 5432
+          - name: DB_HOST
+            value: db
+          - name: source
+            value: 18089
+          - name: DB_PASS
+            valueFrom:
+              secretKeyRef:
+                name: hlgdprodsecret
+                key: DB_PASS
+        ports:
+          - containerPort: 80
+            protocol: TCP
+      imagePullSecrets:
+        - name: daocloud
