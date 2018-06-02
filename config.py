@@ -6,14 +6,14 @@ from api.common.utils import get_log_config
 
 
 class Config(object):
-    LOG_HANDLER = os.getenv('LOG_HANDLER', 'debug,info,error').split(',')
+    LOG_HANDLER = os.getenv('LOG_HANDLER', 'debug,info,error,console').split(',')
     LOG_LEVEL = os.getenv('LOG_LEVEL', 'DEBUG')
     LOG_PATH = os.getenv('LOG_PATH', '/var/log/eebook/')
     LOGCONFIG = get_log_config(component='hlgd', handlers=LOG_HANDLER, level=LOG_LEVEL, path=LOG_PATH)
     LOGCONFIG_QUEUE = ['eebook']
 
     DB_USER = os.getenv("DB_USER", 'postgres')
-    DB_PASSWORD = os.getenv("DB_PASSWORD", None)
+    DB_PASS = os.getenv("DB_PASS", None)
     DB_NAME = os.getenv("DB_NAME", "postgres")
     DB_HOST = os.getenv("DB_HOST", "db")
     DB_PORT = os.getenv("DB_PORT", 5432)
@@ -22,7 +22,7 @@ class Config(object):
                               format_map({
                                   'db_engine': DB_ENGINE,
                                   'user_name': DB_USER,
-                                  'password': DB_PASSWORD,
+                                  'password': DB_PASS,
                                   'hostname': DB_HOST,
                                   'database': DB_NAME
                               })
@@ -53,7 +53,7 @@ class ProductionConfig(Config):
     LOG_HANDLER = os.getenv('LOG_HANDLER', 'debug,info,error').split(',')
     LOG_LEVEL = os.getenv('LOG_LEVEL', 'INFO')
     LOG_PATH = os.getenv('LOG_PATH', '/var/log/eebook/')
-    LOGCONFIG = get_log_config(component='hlvs', handlers=LOG_HANDLER, level=LOG_LEVEL, path=LOG_PATH)
+    LOGCONFIG = get_log_config(component='hlgd', handlers=LOG_HANDLER, level=LOG_LEVEL, path=LOG_PATH)
 
 
 config = {

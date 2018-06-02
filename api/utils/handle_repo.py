@@ -21,10 +21,8 @@ def _get_json(path):
 
 def get_metadata_from_repo():
     result = list()
-    for root, dirs, files in os.walk('/catalog/json', followlinks=False):
-        print(root)
-        print(dirs)
-        print(files)
+    for _, dirs, files in os.walk('/catalog/json', followlinks=False):
+        LOGGER.info("files: {}".format(files))
         # for item in files
         # result.append(os.path.join(root, files))
         file_path_list = ['/catalog/json/'+item for item in files]

@@ -114,7 +114,8 @@ def get_log_config(component, handlers, level='DEBUG', path='/var/log/eebook'):
             },
             '': {
                 'handlers': handlers,
-                'level': level
+                'level': level,
+                'propagate': False
             }
         }
     }
