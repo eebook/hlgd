@@ -36,7 +36,8 @@ def get_url_metadata():
             'repo': metadata.repo,
             'info': metadata.info,
             'image': metadata.image,
-            'image_version': metadata.image_version
+            'image_version': metadata.image_version,
+            'examples': metadata.examples
         }
         return result
     else:

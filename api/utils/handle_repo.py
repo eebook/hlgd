@@ -21,11 +21,11 @@ def _get_json(path):
 
 def get_metadata_from_repo():
     result = list()
-    for _, dirs, files in os.walk('/catalog/json', followlinks=False):
+    for _, dirs, files in os.walk('/catalog/stable', followlinks=False):
         LOGGER.info("files: {}".format(files))
         # for item in files
         # result.append(os.path.join(root, files))
-        file_path_list = ['/catalog/json/'+item for item in files]
+        file_path_list = ['/catalog/stable/'+item for item in files]
     for item in file_path_list:
         result_item = _get_json(item)
         result.append(result_item)
