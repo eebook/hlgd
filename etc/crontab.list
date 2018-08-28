@@ -1,0 +1,1 @@
+*/10 * * * * curl -X PUT -H "Content-Type: application/json" localhost:80/v1/url_metadata/sync
