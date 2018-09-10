@@ -13,7 +13,7 @@ from ..common.utils import json
 from ..common.exceptions import FieldValidateFailed
 from ..common import status
 from . import url_metadata_bp
-from ..utils.match import get_website_type
+from ..utils import get_website_type, get_website_examples
 from ..utils.handle_git import clone_repo, update_repo
 from ..utils.handle_repo import get_metadata_from_repo
 from .models import Metadata
@@ -56,3 +56,9 @@ def sync_metadata():
     for item in metadata_list:
         insert_or_update(item)
     return {}
+
+@url_metadata_bp.route('/examples', methods=["GET"])
+@json
+def get_examples():
+    result = get_website_examples()
+    return result
