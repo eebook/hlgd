@@ -22,7 +22,7 @@ LOGGER = logging.getLogger(__name__)
 
 @root_bp.route("/_ping", methods=["GET"])
 def ping():
-    return "pong\n"
+    return {"hlgd:": "pong"}
 
 
 def create_app(config_name='dev'):

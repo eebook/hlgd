@@ -81,6 +81,17 @@ def json_error_handler(app):
         response.status_code = error.status_code
         return response
 
+    @app.errorhandler(NotFound.code)
+    def resource_not_found(error):
+        """
+        Custom `errorhandler` for 404 pages.
+        Returns a JSON object with a message
+        that accessed URL was not found.
+        """
+        response = jsonify(APIException(code='resource_not_exist').to_dict())
+        response.status_code = NotFound.code
+        return response
+
     @app.errorhandler(MethodNotAllowed.code)
     def method_not_allowed(error):
         response = jsonify(
