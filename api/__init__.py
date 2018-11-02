@@ -14,6 +14,7 @@ from .common.exceptions import APIException
 from .common.middleware import response
 from .common.utils import RegexConverter
 from .common.database import db
+from .common.diagnose import diagnose
 
 BP_NAME = 'root'
 root_bp = Blueprint(BP_NAME, __name__)
@@ -24,6 +25,9 @@ LOGGER = logging.getLogger(__name__)
 def ping():
     return {"hlgd:": "pong"}
 
+@root_bp.route("/_diagnose", methods=["GET"])
+def diagnose_api():
+    return diagnose()
 
 def create_app(config_name='dev'):
     app = Flask(__name__)
@@ -36,17 +40,7 @@ def create_app(config_name='dev'):
             raise APIException('invalid_content_type')
     # OUT
     app.response_class = response.JSONResponse
-
-    # def make_json_error(ex):
-    #     res = jsonify(message=str(ex))
-    #     res.status_code = (ex.code if isinstance(ex, HTTPException) else 500)
-    #     return res
-    #
-    # for code in default_exceptions.keys():
-    #     app.error_handler_spec[None][code] = make_json_error
-
     response.json_error_handler(app=app)
-
     # Load default configuration
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)

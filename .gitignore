@@ -94,3 +94,4 @@ envs/
 container-logs/
 redis-data/
 pg-data/
+notes.md
